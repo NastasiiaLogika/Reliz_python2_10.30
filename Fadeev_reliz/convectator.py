@@ -101,13 +101,46 @@ class CurrtncyConvecter(QDialog):
             self.result.setText("Помилка вводу")
 
             
-
-
-
+class MainWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Конвертатор")
+        self.setFixedSize(480, 700)
+        self.setStyleSheet("background-color: #333333;")
+        self.init_ui()
+    
+    def init_ui(self): 
+        layout = QVBoxLayout()
+        
+        open_button = QPushButton("Відкрити конвертатор валют")
+        open_button.setFont(QFont("Helvetica", 14, QFont.Bold))
+        open_button.setStyleSheet("""
+                                  QPushButton{
+                                      background-color: #ff8c00;
+                                      color: #333333;
+                                      border: none;
+                                      padding: 12px;
+                                  }
+                                  
+                                  QPushButton:hover{
+                                      background-color: #e07c00;
+                                  }
+                                  
+                                  """)
+        open_button.clicked.connect(self.open_converter)
+        
+        layout.addStretch()
+        layout.addWidget(open_button)
+        layout.addStretch()
+        self.setLayout(layout)
+    
+    def open_converter(self):
+        self.converter = CurrtncyConvecter()
+        self.converter.exec_()
 
 
 
 app = QApplication(sys.argv)
-Window = CurrtncyConvecter() 
+Window = MainWindow()
 Window.show()
 sys.exit(app.exec_())
